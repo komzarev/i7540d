@@ -1,0 +1,6 @@
+[submodule "dep/qkeepalivetcpsocket"]
+	path = dep/qkeepalivetcpsocket
+	url = git@bitbucket.org:mtcorp/qkeepalivetcpsocket.git
+[submodule "dep/qmake"]
+	path = dep/qmake
+	url = git@bitbucket.org:mtcorp/qmake.git

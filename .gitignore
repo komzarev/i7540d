@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+docsCopy/*
+i7540can/debug
+i7540can/release
+i7540can/x64
