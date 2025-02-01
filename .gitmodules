@@ -1,0 +1,3 @@
+[submodule "dep/qkeepalivetcpsocket"]
+	path = dep/qkeepalivetcpsocket
+	url = git@github.com:komzarev/qkeepalivetcpsocket.git

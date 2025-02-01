@@ -1,5 +1,5 @@
-include($$PWD/../../dep/qmake/common.pri)
-include($$PWD/../../dep/qkeepalivetcpsocket/qkeepalivetcpsocket.pri)
+include($$PWD/../dep/qmake/common.pri)
+include($$PWD/../dep/qkeepalivetcpsocket/src/qkeepalivetcpsocket.pri)
 
 TARGET = i7540can
 TEMPLATE = lib
