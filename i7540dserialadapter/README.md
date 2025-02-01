@@ -1,15 +1,15 @@
 # I7540dSerialAdapter #
 
-Проект динамической библиотеки для работы с последовательными интерфейсам через адаптер ICP DAS I7540D.
-ICP DAS I7540D позволяет передавать информацию через Ethernet в CAN,RS232,RS485.
+A dynamic library project for working with serial interfaces through the ICP DAS I7540D adapter.
+The ICP DAS I7540D allows information to be transmitted via Ethernet to CAN, RS232, RS485.
 
-### Использование ###
+### Usage ###
 
-Для включения в свой проект понадобятся заголовочные фалы: i7540dserialadapter.hpp и i7540dserialadapter_global.hpp.
-Интерфейс и использование аналогичны QSerialPort из Qt5, в качестве имени порта надо использовать IP адрес устройства.
+To include in your project, you will need the header files: i7540dserialadapter.hpp and i7540dserialadapter_global.hpp.
+The interface and usage are similar to QSerialPort from Qt5, and the port name should be the IP address of the device.
 
-### Пример 
-```
+### Example
+```cpp
 #include "i7540dserialadapter.hpp"
 
 int main(void) {

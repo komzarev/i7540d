@@ -10,9 +10,6 @@ bin/*
 moc/*
 obj/*
 *.stash
-/obj/qt5.12.x/x86_64-windows-mingw/debug/i7540dserialadapter
-/moc/qt5.12.x/x86_64-windows-mingw/debug/i7540dserialadapter
 *.a
 *.dll
-/.vs/i7540dserialadapter/config/applicationhost.config
 docCopy/*
