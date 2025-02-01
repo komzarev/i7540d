@@ -65,8 +65,6 @@ windows {
         # MSVC 2013
         Compiler = msvc2013
         #Release with debug info for windows
-        #QMAKE_CXXFLAGS_RELEASE += /Zi #C++/General/Debug Information Format = Program Database (/Zi)
-        #QMAKE_LFLAGS_RELEASE += /DEBUG #C++/Linker/Generate Debug Info = Yes (/DEBUG)
     }
     
     *-msvc2015* {
@@ -105,8 +103,7 @@ QtCompatibleVersion = $$QT_MAJOR_VERSION'.'$$QT_MINOR_VERSION'.x'
 qnx {
     #DEFINES += _QNX_SOURCE
     *-g++*  {
-        # gcc-4.4.2 cannot recognize parameter -Wno-unused-local-typedefs
-        #QMAKE_CXXFLAGS += -Wno-unused-parameter
+
         QMAKE_CXXFLAGS += -std=c++11
         DEFINES += __EXT_QNX __QNX__ __QNXNTO__ __unix__ __unix __ELF__ __ARM__ __arm__ __LITTLEENDIAN__ __ARMEL__ _MUDFLAPTH
     }
@@ -123,27 +120,9 @@ qnx {
     DEFINES += _GTHREAD_USE_MUTEX_INIT_FUNC
     DEFINES += _GTHREAD_USE_RECURSIVE_MUTEX_INIT_FUNC
     DEFINES += _GTHREAD_USE_COND_INIT_FUNC
-    #clang* {
-#        QMAKE_CXXFLAGS += -ferror-limit=20 -D__EXT_QNX -D_QNX_SOURCE -D__QNX__ -D__QNXNTO__ -D__unix__ -D__unix -D__ELF__ -D__ARM__ -D__arm__ -D__LITTLEENDIAN__ -D__ARMEL__ -D_MUDFLAPTH
-    #}
-    #QMAKE_CXXFLAGS_RELEASE += -g
-    #QMAKE_CFLAGS_RELEASE += -g
-    #QMAKE_LFLAGS_RELEASE =
-
-#    QMAKE_CXXFLAGS_DEBUG += -finstrument-functions
-#    LIBS += -lprofilingS
-
-#    QMAKE_CXXFLAGS_DEBUG += -pg
-#    QMAKE_LFLAGS_DEBUG += -pg
 }
 
-#!build_pass:message('"'$$Platform'"' platform selected', "'$$Configuration'" configuration')
 !build_pass:message('"'$$TARGET build configuration: qt$$QtCompatibleVersion '/' $$Platform-$$Compiler '/' $$Configuration'"')
-
-# Good way is to use makepec folder name.
-#message(QMAKESPEC $$QMAKESPEC)
-#MSPEC_NAME=$$section(QMAKESPEC, "/", -1, -1)
-#message(MSPEC_NAME $$MSPEC_NAME)
 
 PROJECT_ROOT_DIR = $$PWD/../..
 GLOBAL_INCLUDE_DIR = $$PROJECT_ROOT_DIR/include
@@ -152,8 +131,6 @@ GLOBAL_SRC_DIR = $$PROJECT_ROOT_DIR/src
 TARGET_PUBLIC_HEADERS_DIR = $$GLOBAL_INCLUDE_DIR/$$TARGET
 
 INCLUDEPATH += $$GLOBAL_INCLUDE_DIR
-               #$$PWD/../commondef \
-               #../dependencies/include
 
 
 DESTDIR      = $$PROJECT_ROOT_DIR/bin/qt$$QtCompatibleVersion/$$Platform-$$Compiler/$$Configuration/
@@ -164,47 +141,14 @@ MOC_DIR      = $$PROJECT_ROOT_DIR/moc/qt$$QtCompatibleVersion/$$Platform-$$Compi
 
 UI_DIR       = $$PROJECT_ROOT_DIR/ui/qt$$QtCompatibleVersion/$$Platform-$$Compiler/$$TARGET
 
-#PUBLIC_HEADERS_FILES += commonhelper.h \
-#                        propertydefines.h \
-#                        sleephelper.h \
-#                        typetraits.h
 
 SRC_TO_INCLUDE_RELATIVE_PATH = ../include
 INCLUDE_TO_SRC_RELATIVE_PATH = ../src
 
 PROJECT_IN_GLOBAL_INCLUDE_DIR  = $$GLOBAL_INCLUDE_DIR/$$TARGET
-#PROJECT_IN_GLOBAL_SRC_DIR = GLOBAL_INCLUDE_DIR/$$TARGET
-
-#PUBLIC_HEADERS = include/*
-
-#target_headers.files = $$PUBLIC_HEADERS
-#target_headers.path  = $$PROJECT_IN_GLOBAL_INCLUDE_DIR
-
-#mytarget.target = .buildfile
-#mytarget.commands = touch $$mytarget.target
-#QMAKE_EXTRA_TARGETS += mytarget
-#POST_TARGETDEPS += mytarget
-
-#INSTALLS += target_headers
 
 LIBS        += -L$$DESTDIR
-#LIBS += -L$$PROJECT_ROOT_DIR/3rdparty/lib/qt$$QtCompatibleVersion/$$Platform-$$Compiler/$$Configuration
-#Backward compatibility for lib path
-#LIBDIR_BACKWARD = $$PROJECT_ROOT_DIR/3rdparty/lib/qt$$QT_VERSION/
-#exists($$LIBDIR_BACKWARD){
-#    LIBS += -L$$PROJECT_ROOT_DIR/3rdparty/lib/qt$$QT_VERSION/$$Platform-$$Compiler/$$Configuration
-#    message(Library search path $$PROJECT_ROOT_DIR/3rdparty/lib/qt$$QT_VERSION/$$Platform-$$Compiler/$$Configuration added for backward compatibility)
-#}
 
-#-L../dependencies/lib
-
-#UI_DIR
-
-# Uncomment next line and all child libraries will be built as dynamic.
-#DEFINES  += DYNAMIC_LIBS_BUILD
-
-# Uncomment next line and all child libraries will be built as static.
-#DEFINES  += STATIC_LIBS_BUILD
 
 #win32 {
 # 1 - headers list
@@ -256,100 +200,6 @@ defineReplace(createPublicHeaderAliases) {
 
 QMAKE_EXTRA_TARGETS += publish_headers
 
-#}
 
 export(createPublicHeaderFiles)
-
-#GGG = $$createPublicHeaderAliases($$PUBLIC_HEADERS_FILES,$$PWD)
-
-#QMAKE_HOST
-#.arch	Host architecture
-#.os	Host OS
-#.cpu_count	Number of available cpus
-#.name	Host computer name
-#.version	Host OS version number
-#.version_string	Host OS version string
-#for example:
-#win32-g++:contains(QMAKE_HOST.arch, x86_64):{
-#    message("Host is 64bit")
-#    ...
-#}
-
-
-#defineReplace(PublicHeaderFiles){
-#    CMD_CREATE_DIR = $$quote( (if not exist $${PROJECT_IN_GLOBAL_INCLUDE_DIR} mkdir $${PROJECT_IN_GLOBAL_INCLUDE_DIR}) )
-#    QMAKE_POST_LINK += $$replace(CMD_CREATE_DIR, / , \\)
-#    for(FILE, PUBLIC_HEADERS_FILES) {
-#        #QMAKE_POST_LINK +=$$quote(cmd /c copy /y $${FILE} $${DESTDIR_WIN}$$escape_expand(\n\t))
-#        SOURCEFILE_PATH = $${FILE}
-#        SOURCEFILE_NAME = $$basename(SOURCEFILE_PATH) #$$replace(SOURCEFILE_PATH, $$dirname(SOURCEFILE_PATH), )
-#        TARGERFILEPATH = $${PROJECT_IN_GLOBAL_INCLUDE_DIR}/$${SOURCEFILE_NAME}
-#        #!exists($$PWD/$$THISFILEPATH)
-#        #{
-#        #    message($$PWD/$$THISFILEPATH not exists)
-#        #}
-#        #message($$SOURCEFILE_PATH)
-#        #message($$SOURCEFILE_NAME)
-#        #message($$TARGERFILEPATH)
-#        #
-#        #message($$basename(SOURCEFILE_PATH))
-#        #message($$basename(SOURCEFILE_NAME))
-#        #message($$basename(TARGERFILEPATH))
-#
-#        TF_TEXT = include
-#        #TF_TEXT2 = $$join(TF_TEXT, $$LITERAL_HASH, $$LITERAL_HASH) $${PWD}/$$SOURCEFILE_PATH
-#        TF_TEXT2 = $$join(TF_TEXT, $$LITERAL_HASH, $$LITERAL_HASH) #$$system_quote($${PWD}/$$SOURCEFILE_PATH)
-#        #TF_TEXT3 = $$join(TF_TEXT, $$LITERAL_HASH, ) $$system_quote($${PWD}/$$SOURCEFILE_PATH)
-#
-#        ABS_PATH = $${PWD}
-#        REL_PATH = ./../$$INCLUDE_TO_SRC_RELATIVE_PATH/$$TARGET
-#        PATH_BASE = $${REL_PATH} #$${ABS_PATH}
-#        TF_TEXT4 = $$TF_TEXT2 $$escape_expand(\")$${PATH_BASE}/$$SOURCEFILE_PATH$$escape_expand(\")
-#
-#        #TF_TEXT2 = "$$TF_TEXT2"
-#
-#        #message($$TF_TEXT)
-#        #message($$TF_TEXT2)
-#        message($$REL_PATH)
-#        message($$TF_TEXT4)
-#
-#        #QMAKE_POST_LINK +=$$quote( & ( cmd @echo off & @echo $$system_quote($${TF_TEXT2}) > $${TARGERFILEPATH} ) )
-#        QMAKE_POST_LINK +=$$quote( & ( cmd @echo off & @echo $${TF_TEXT4} > $${TARGERFILEPATH} ) )
-#    }
-#
-#    export(QMAKE_POST_LINK)
-#    message($$QMAKE_POST_LINK)
-#
-#    #copy /b NUL $${PROJECT_IN_GLOBAL_INCLUDE_DIR}/EmptyFile.txt
-#    #echo 'Hello, world.' >foo.txt
-#    greaterThan(QT_MAJOR_VERSION, 4) {
-#    return
-#    }
-#    !greaterThan(QT_MAJOR_VERSION, 4) {
-#        return ()
-#    }
-#    #lessThan(QT_MAJOR_VERSION, 5): return (1)
-#}
-
-#defineReplace(headersAndSources) {
-#    variable = $$1
-#    names = $$eval($$variable)
-#    headers =
-#    sources =
-#
-#    for(name, names) {
-#        header = $${name}.h
-#        exists($$header) {
-#            headers += $$header
-#        }
-#        source = $${name}.cpp
-#        exists($$source) {
-#            sources += $$source
-#        }
-#    }
-#    return($$headers $$sources)
-#}
-
-
-
 

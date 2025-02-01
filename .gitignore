@@ -2,6 +2,11 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 docsCopy/*
+obj/*
+moc/*
+bin/*
 i7540can/debug
 i7540can/release
 i7540can/x64
+i7540can/build/*
+i7540dserialadapter/build/*

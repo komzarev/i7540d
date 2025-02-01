@@ -28,6 +28,6 @@ PLUGIN_TYPE = canbus
 PLUGIN_EXTENDS = serialbus
 PLUGIN_CLASS_NAME = I7540CanBusPlugin
 
-exists($$PWD/../../dep/qmake/version.pri) {
-    include($$PWD/../../dep/qmake/version.pri)
+exists($$PWD/../dep/qmake/version.pri) {
+    include($$PWD/../dep/qmake/version.pri)
 }
